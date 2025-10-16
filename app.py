@@ -243,14 +243,22 @@ if uploaded_file is not None:
 
         with col1:
             st.markdown("<div class='image-card'>", unsafe_allow_html=True)
-            # Gunakan try-except untuk menampilkan gambar
+            # Gunakan try-except untuk menampilkan gambar dengan parameter yang kompatibel
             try:
+                # Coba dengan use_container_width terlebih dahulu
                 st.image(image, caption="Before", use_container_width=True)
+            except TypeError:
+                # Fallback ke use_column_width untuk versi Streamlit lama
+                try:
+                    st.image(image, caption="Before", use_column_width=True)
+                except Exception as e:
+                    st.error(f"Error displaying original image: {e}")
+                    # Fallback terakhir tanpa parameter width
+                    st.image(image, caption="Before")
             except Exception as e:
                 st.error(f"Error displaying original image: {e}")
-                # Fallback: convert to numpy dan kembali ke PIL
-                img_array = np.array(image)
-                st.image(img_array, caption="Before (Fallback)", use_container_width=True)
+                # Fallback terakhir tanpa parameter width
+                st.image(image, caption="Before")
             st.markdown("</div>", unsafe_allow_html=True)
 
         with st.spinner("⚙️ Sedang memproses gambar dengan AI..."):
@@ -260,12 +268,20 @@ if uploaded_file is not None:
             with col2:
                 st.markdown("<div class='image-card'>", unsafe_allow_html=True)
                 try:
+                    # Coba dengan use_container_width terlebih dahulu
                     st.image(denoised_image, caption="After", use_container_width=True)
+                except TypeError:
+                    # Fallback ke use_column_width untuk versi Streamlit lama
+                    try:
+                        st.image(denoised_image, caption="After", use_column_width=True)
+                    except Exception as e:
+                        st.error(f"Error displaying denoised image: {e}")
+                        # Fallback terakhir tanpa parameter width
+                        st.image(denoised_image, caption="After")
                 except Exception as e:
                     st.error(f"Error displaying denoised image: {e}")
-                    # Fallback
-                    denoised_array = np.array(denoised_image)
-                    st.image(denoised_array, caption="After (Fallback)", use_container_width=True)
+                    # Fallback terakhir tanpa parameter width
+                    st.image(denoised_image, caption="After")
                 st.markdown("</div>", unsafe_allow_html=True)
 
             # Download button
