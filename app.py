@@ -1,17 +1,17 @@
 import streamlit as st
-
-st.set_page_config(
-    page_title="RIDNet Image Denoising",
-    layout="centered",
-    page_icon="🧠"
-)
-
 import torch
 import torch.nn as nn
 from PIL import Image
 import numpy as np
 import io
 
+# ==========================
+# SET PAGE_CONFIG HARUS DI AWAL DAN HANYA SEKALI
+st.set_page_config(
+    page_title="RIDNet Image Denoising",
+    layout="centered",
+    page_icon="🧠"
+)
 
 # ==========================
 class CALayer(nn.Module):
@@ -84,7 +84,7 @@ def denoise_image(model, image_pil):
     return Image.fromarray(output)
 
 # ==========================
-st.set_page_config(page_title="RIDNet Image Denoising", layout="centered")
+# HAPUS BARIS INI: st.set_page_config(page_title="RIDNet Image Denoising", layout="centered")
 
 st.markdown("""
     <style>
@@ -208,5 +208,3 @@ if uploaded_file is not None:
         file_name="denoised_result.png",
         mime="image/png",
     )
-
-
