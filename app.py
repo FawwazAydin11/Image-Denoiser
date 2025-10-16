@@ -5,6 +5,12 @@ from PIL import Image
 import numpy as np
 import io
 
+# ⚠️ Tambahkan ini PALING ATAS sebelum elemen UI Streamlit lain
+st.set_page_config(
+    page_title="RIDNet Image Denoising",
+    layout="centered",
+    page_icon="🧠"
+)
 
 # ==========================
 class CALayer(nn.Module):
